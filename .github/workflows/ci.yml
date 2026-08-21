@@ -13,6 +13,7 @@ jobs:
       DATABASE_URL: sqlite:///data/envaplast.db
       ENVAPLAST_SEED: "20260720"
       ENVAPLAST_ENV: test
+      PYTHONPATH: .
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
