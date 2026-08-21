@@ -2,7 +2,7 @@
 
 > **De una cartera dispersa a una prioridad clara de gestión.**
 
-> Demo pública propia: pendiente de despliegue.
+> **Demo pública:** [codercup-cobranzas-ai.streamlit.app](https://codercup-cobranzas-ai.streamlit.app/)
 
 Este repositorio independiente contiene la entrega de Matías Noero para Coder Cup 2026.
 El producto transforma la cartera de una PyME ficticia en una cola de cobranzas explicable:
@@ -167,8 +167,7 @@ Nunca se deben versionar `.env`, `secrets.toml` ni credenciales. Para PostgreSQL
 
 El workflow `.github/workflows/daily-data.yml` se ejecuta diariamente o manualmente, exige `DATABASE_URL`, completa fechas faltantes y detiene el proceso si falla calidad o tests. La guía para Supabase y Streamlit Community Cloud está en [docs/deployment.md](docs/deployment.md). No se crean recursos externos automáticamente.
 
-La demo pública independiente se incorporará aquí después del despliegue del repositorio de
-Coder Cup.
+La demo pública independiente está disponible en [Streamlit Community Cloud](https://codercup-cobranzas-ai.streamlit.app/).
 
 ### Publicación rápida del portfolio
 
