@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pandas as pd
 
-
 SCORE_WEIGHTS = {
     "saldo_vencido": 35,
     "mora": 25,

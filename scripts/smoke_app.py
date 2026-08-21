@@ -10,6 +10,7 @@ PAGES = [
     "Facturación y ventas",
     "Pedidos",
     "Cuentas corrientes",
+    "Cobranzas AI",
     "Clientes y ABC",
 ]
 
@@ -32,4 +33,6 @@ if len(app.sidebar.radio) != 1:
     raise RuntimeError("La navegación lateral no renderizó el control esperado")
 if not any(value["dataframes"] for value in results.values()):
     raise RuntimeError("No se renderizó ninguna tabla de detalle")
+if not results["Cobranzas AI"]["dataframes"]:
+    raise RuntimeError("Cobranzas AI no renderizó el ranking priorizado")
 print(results)
