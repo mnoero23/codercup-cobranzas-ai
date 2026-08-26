@@ -88,15 +88,16 @@ El borrador es editable y descargable. La decisión final permanece bajo revisi�
 - explicación de factores;
 - acción recomendada;
 - borrador editable y descargable;
+- gestión persistente por cliente con estado, responsable y notas;
+- compromiso de pago;
+- historial de eventos;
+- exclusión de casos resueltos de la cola activa;
 - datos sintéticos;
 - pruebas unitarias específicas del ranking y del mensaje.
 
 ### Necesario para v1.0
 
 - captura propia de la pantalla Cobranzas AI;
-- filtros de prioridad y ejecutivo responsable;
-- historial de gestiones y estado del caso;
-- fecha de compromiso de pago;
 - validaciones adicionales para estabilidad del ranking;
 - medición del tiempo ahorrado y cobertura gestionada;
 - documentación de cambios de pesos y umbrales.

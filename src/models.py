@@ -12,6 +12,7 @@ from sqlalchemy import (
     Index,
     Numeric,
     String,
+    Text,
     UniqueConstraint,
     func,
 )
@@ -161,6 +162,51 @@ class Collection(Base):
     amount: Mapped[Decimal] = mapped_column(MONEY)
     payment_method: Mapped[str] = mapped_column(String(30))
     reference: Mapped[str] = mapped_column(String(50))
+
+
+class CollectionCase(Base):
+    __tablename__ = "collection_cases"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('pendiente','contactado','comprometido','resuelto')",
+            name="ck_collection_case_status",
+        ),
+        CheckConstraint(
+            "promise_amount IS NULL OR promise_amount >= 0",
+            name="ck_collection_case_promise_amount",
+        ),
+        Index("ix_collection_case_status_owner", "status", "owner"),
+    )
+    case_id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.customer_id"), unique=True)
+    status: Mapped[str] = mapped_column(String(20), default="pendiente")
+    owner: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    last_note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    promise_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    promise_amount: Mapped[Decimal | None] = mapped_column(MONEY, nullable=True)
+    last_action_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
+    customer: Mapped[Customer] = relationship()
+    events: Mapped[list[CollectionCaseEvent]] = relationship(
+        back_populates="case", cascade="all, delete-orphan"
+    )
+
+
+class CollectionCaseEvent(Base):
+    __tablename__ = "collection_case_events"
+    __table_args__ = (Index("ix_collection_case_event_case_date", "case_id", "created_at"),)
+    event_id: Mapped[int] = mapped_column(primary_key=True)
+    case_id: Mapped[int] = mapped_column(ForeignKey("collection_cases.case_id", ondelete="CASCADE"))
+    status: Mapped[str] = mapped_column(String(20))
+    owner: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    promise_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    promise_amount: Mapped[Decimal | None] = mapped_column(MONEY, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    case: Mapped[CollectionCase] = relationship(back_populates="events")
 
 
 class CalendarDay(Base):

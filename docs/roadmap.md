@@ -13,13 +13,13 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 
 ## P1 · Gestión de casos · requisito para v1.0
 
-- [ ] Filtrar por prioridad y estado de gestión.
-- [ ] Asignar responsable.
-- [ ] Registrar estado: pendiente, contactado, comprometido, resuelto.
-- [ ] Guardar fecha y nota de la última gestión.
-- [ ] Registrar compromiso de pago.
-- [ ] Evitar que un caso resuelto siga apareciendo como prioridad activa.
-- [ ] Mantener trazabilidad de cambios.
+- [x] Filtrar por prioridad y estado de gestión.
+- [x] Asignar responsable.
+- [x] Registrar estado: pendiente, contactado, comprometido, resuelto.
+- [x] Guardar fecha y nota de la última gestión.
+- [x] Registrar compromiso de pago.
+- [x] Evitar que un caso resuelto siga apareciendo como prioridad activa.
+- [x] Mantener trazabilidad de cambios.
 
 ## P1 · Calidad del scoring · requisito para v1.0
 
