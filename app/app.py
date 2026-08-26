@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 from datetime import date
+from decimal import Decimal
 from pathlib import Path
 
 import pandas as pd
@@ -42,6 +43,13 @@ from src.analytics import (
     orders_detail,
     receivables,
     sales_detail,
+)
+from src.case_management import (
+    CASE_STATUSES,
+    enrich_queue_with_cases,
+    load_case_events,
+    load_collection_cases,
+    save_collection_case,
 )
 from src.cobranzas import collection_message, prioritize_receivables
 from src.database import engine
@@ -356,9 +364,36 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
         "Una cola de trabajo explicable para concentrar la gestión donde más impacto genera.",
         "Funcionalidad desarrollada para Coder Cup 2026",
     )
-    queue = prioritize_receivables(ar[ar.invoice_date.dt.date <= end])
+    queue = enrich_queue_with_cases(
+        prioritize_receivables(ar[ar.invoice_date.dt.date <= end]),
+        load_collection_cases(engine),
+    )
     if queue.empty:
         st.success("No hay saldos abiertos para priorizar.")
+        return
+
+    with st.sidebar:
+        sidebar_section("GESTIÓN DE CASOS")
+        show_resolved = st.checkbox("Mostrar casos resueltos", value=False)
+        priority_filter = st.multiselect(
+            "Prioridad", ["Crítica", "Alta", "Seguimiento"], placeholder="Todas"
+        )
+        status_filter = st.multiselect(
+            "Estado", list(CASE_STATUSES), placeholder="Todos los activos"
+        )
+        owners = sorted(owner for owner in queue.owner.unique() if owner != "Sin asignar")
+        owner_filter = st.multiselect("Responsable", owners, placeholder="Todos")
+
+    if not show_resolved:
+        queue = queue[queue.status != "resuelto"]
+    if priority_filter:
+        queue = queue[queue.priority.isin(priority_filter)]
+    if status_filter:
+        queue = queue[queue.status.isin(status_filter)]
+    if owner_filter:
+        queue = queue[queue.owner.isin(owner_filter)]
+    if queue.empty:
+        st.info("No hay casos para los filtros de gestión seleccionados.")
         return
 
     top_ten = queue.head(10)
@@ -392,6 +427,9 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             "balance",
             "overdue_balance",
             "max_days_past_due",
+            "status",
+            "owner",
+            "promise_date",
             "explanation",
         ]
     ].rename(
@@ -402,6 +440,9 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             "balance": "Saldo",
             "overdue_balance": "Vencido",
             "max_days_past_due": "Mora máxima",
+            "status": "Estado",
+            "owner": "Responsable",
+            "promise_date": "Compromiso",
             "explanation": "Por qué aparece aquí",
         }
     )
@@ -422,6 +463,10 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             "El ranking es una recomendación explicable. La decisión y el contacto permanecen "
             "bajo revisión humana."
         )
+        st.markdown(f"**Estado:** {selected.status.title()}")
+        st.markdown(f"**Responsable:** {selected.owner}")
+        if pd.notna(selected.promise_date):
+            st.markdown(f"**Compromiso:** {selected.promise_date}")
     with right:
         draft = collection_message(
             selected.customer_name,
@@ -442,6 +487,66 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             icon=":material/download:",
             use_container_width=True,
         )
+
+    section_heading(
+        "Registrar gestión",
+        "Actualizá el caso. Cada guardado agrega un evento al historial.",
+    )
+    current_status = str(selected.status)
+    current_owner = "" if selected.owner == "Sin asignar" else str(selected.owner)
+    current_promise = (
+        pd.to_datetime(selected.promise_date).date() if pd.notna(selected.promise_date) else None
+    )
+    current_amount = float(selected.promise_amount) if pd.notna(selected.promise_amount) else 0.0
+    with st.form(f"case_form_{selected.customer_id}"):
+        form_left, form_right = st.columns(2)
+        with form_left:
+            status = st.selectbox(
+                "Estado de gestión",
+                list(CASE_STATUSES),
+                index=list(CASE_STATUSES).index(current_status),
+            )
+            owner = st.text_input("Responsable", value=current_owner)
+            note = st.text_area("Nota de gestión", value="", height=120)
+        with form_right:
+            has_promise = st.checkbox(
+                "Registrar compromiso de pago", value=current_promise is not None
+            )
+            promise_date = st.date_input(
+                "Fecha de compromiso",
+                value=current_promise or date.today(),
+                disabled=not has_promise,
+            )
+            promise_amount = st.number_input(
+                "Importe comprometido",
+                min_value=0.0,
+                value=current_amount,
+                step=10_000.0,
+                disabled=not has_promise,
+            )
+        submitted = st.form_submit_button("Guardar gestión", use_container_width=True)
+    if submitted:
+        try:
+            save_collection_case(
+                int(selected.customer_id),
+                status=status,
+                owner=owner,
+                note=note,
+                promise_date=promise_date if has_promise else None,
+                promise_amount=Decimal(str(promise_amount)) if has_promise else None,
+                target_engine=engine,
+            )
+        except ValueError as exc:
+            st.error(str(exc))
+        else:
+            load_data.clear()
+            st.success("Gestión registrada.")
+            st.rerun()
+
+    history = load_case_events(int(selected.customer_id), engine)
+    if not history.empty:
+        section_heading("Historial del caso", "Trazabilidad de las gestiones registradas.")
+        dataframe(history, key=f"case_history_{selected.customer_id}", height=260)
 
 
 def abc_page(abc: pd.DataFrame, sales: pd.DataFrame, start: date, end: date) -> None:
