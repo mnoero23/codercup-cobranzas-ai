@@ -103,15 +103,15 @@ Un cliente con saldo vencido alto, más de 90 días de mora, uso elevado del lí
 - explicaciones y acciones recomendadas;
 - KPIs de cartera y cobertura;
 - borrador editable y descargable;
+- estado de gestión, responsable y notas por cliente;
+- compromiso de pago y trazabilidad de cambios;
+- filtros por prioridad, estado y responsable;
 - demo pública;
 - pruebas automatizadas.
 
 ### Antes de Portfolio Ready v1.0
 
 - captura exclusiva de Cobranzas AI;
-- filtros de gestión;
-- historial y estado del caso;
-- compromiso de pago;
 - pruebas adicionales del scoring;
 - métricas de efectividad y tiempo ahorrado.
 
