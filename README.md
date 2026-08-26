@@ -2,125 +2,143 @@
 
 > **De una cartera dispersa a una prioridad clara de gestión.**
 
-> **Demo pública:** [codercup-cobranzas-ai.streamlit.app](https://codercup-cobranzas-ai.streamlit.app/)
+[🚀 Ver demo en vivo](https://codercup-cobranzas-ai.streamlit.app/)
 
-Este repositorio independiente contiene la entrega de Matías Noero para Coder Cup 2026.
-El producto transforma la cartera de una PyME ficticia en una cola de cobranzas explicable:
-prioriza clientes, muestra los factores de riesgo, recomienda la siguiente acción y genera un
-borrador editable que siempre queda sujeto a revisión humana.
+**Estado:** MVP funcional desarrollado para Coder Cup 2026 · en evolución hacia Portfolio Ready v1.0.
 
-El proyecto reutiliza datos sintéticos y componentes técnicos propios de Envaplast Analytics,
-pero la experiencia **Cobranzas AI**, su scoring, sus explicaciones y su flujo de gestión fueron
-desarrollados específicamente durante la competencia.
+Envaplast Cobranzas AI convierte una cartera abierta en una cola de trabajo explicable: prioriza clientes, muestra las señales que sostienen el ranking, recomienda el siguiente paso y genera un borrador editable. La decisión y el contacto permanecen siempre bajo revisión humana.
 
-El proyecto reproduce el circuito comercial completo —desde el pedido hasta la cobranza— y lo convierte en una aplicación de Business Intelligence capaz de responder preguntas de negocio mediante indicadores claros, procesos automatizados y visualizaciones ejecutivas.
+El proyecto utiliza el contexto comercial y los datos sintéticos de [Envaplast Analytics](https://github.com/mnoero23/envaplast-analytics), pero la experiencia de cobranzas, el scoring y el flujo de gestión fueron desarrollados específicamente para la competencia.
 
-> **Aviso:** Envaplast, sus clientes, CUIT, documentos y operaciones son totalmente sintéticos. No representan personas ni empresas reales.
+> Envaplast, sus clientes, documentos y operaciones son ficticios. No representan personas ni empresas reales.
 
-## ¿Por qué construí este proyecto?
+## El problema
 
-Muchas PyMEs toman decisiones con información distribuida entre planillas, reportes y sistemas desconectados. Envaplast Analytics demuestra cómo transformar ese escenario en un producto de datos moderno: integrado, reproducible y orientado a responder preguntas concretas del negocio.
+Cuando la cartera se gestiona entre planillas y sistemas separados, ordenar solo por saldo o por días de mora puede enfocar el esfuerzo en cuentas de bajo impacto. Una PyME necesita responder rápidamente:
 
-Envaplast es una empresa ficticia, pero el problema de negocio que representa es real y frecuente en organizaciones que necesitan convertir datos dispersos en información confiable para decidir.
+- ¿A qué cliente conviene contactar primero?
+- ¿Qué señales explican esa prioridad?
+- ¿Qué acción corresponde realizar hoy?
+- ¿Cómo preparar el contacto sin perder el control humano?
 
-## 🎯 El problema
+## La solución
 
-En muchas pequeñas y medianas empresas la información comercial existe, pero se encuentra distribuida entre planillas, reportes y distintos sistemas.
+El MVP propone un flujo simple:
 
-Responder preguntas simples suele requerir tiempo y trabajo manual:
+1. **Entender** la exposición total y vencida.
+2. **Priorizar** clientes con un scoring auditable.
+3. **Explicar** por qué cada cuenta aparece en esa posición.
+4. **Recomendar** el siguiente paso de gestión.
+5. **Preparar** un borrador editable.
+6. **Revisar** antes de cualquier comunicación.
 
-- ¿Cómo evolucionan las ventas?
-- ¿Qué clientes generan mayor facturación?
-- ¿Cuánto dinero está pendiente de cobro?
-- ¿Cómo evoluciona la cartera?
-- ¿Qué pedidos presentan demoras?
+## Flujo principal
 
-Envaplast Analytics centraliza esa información y la transforma en una herramienta que permite responder esas preguntas en segundos.
+### 1. Impacto potencial
 
-## Decisiones que habilita
+La pantalla resume cartera abierta, saldo vencido, casos críticos y cobertura monetaria del top 10.
 
-- Detectar caídas de facturación comparando períodos equivalentes.
-- Priorizar cobranzas según vencimiento, concentración y límite de crédito.
-- Identificar pedidos demorados y medir el cumplimiento de fechas prometidas.
-- Comprender qué clientes, productos y zonas explican el resultado comercial.
-- Segmentar la cartera con análisis ABC para orientar la gestión de cuentas.
+### 2. Prioridades de hoy
 
-## 🚀 Capacidades del proyecto
+Las facturas abiertas se agrupan por cliente y se ordenan mediante cuatro factores:
 
-- Modelado relacional y SQL compatible con SQLite/PostgreSQL.
-- Generación reproducible de 18 meses de datos con estacionalidad y concentración comercial.
-- ETL incremental idempotente, trazabilidad y controles automáticos.
-- KPIs comerciales, cuentas corrientes, mora y análisis ABC.
-- Aplicación Streamlit profesional, filtros, visualizaciones y descargas.
-- **Cobranzas AI:** ranking explicable de cuentas, siguiente acción y borrador editable.
+| Factor | Peso máximo |
+|---|---:|
+| Saldo vencido relativo | 35 |
+| Días máximos de mora | 25 |
+| Uso del límite de crédito | 20 |
+| Concentración de cartera | 20 |
 
-## Vistas del MVP
+El resultado se clasifica como **Crítica**, **Alta** o **Seguimiento**.
 
-1. **Resumen ejecutivo:** facturación comparable, unidades, pedidos, cartera, mora y alertas.
-2. **Facturación y ventas:** tendencias y mix por producto, cliente y geografía.
-3. **Pedidos:** backlog, estados, demoras y cumplimiento prometido.
-4. **Cuentas corrientes:** saldos, aging, vencidos, concentración y límites.
-5. **Cobranzas AI:** priorización por riesgo e impacto con revisión humana.
-6. **Clientes y ABC:** participación móvil de 12 meses y evolución individual.
+### 3. Asistente de gestión
 
-## 🏆 Coder Cup 2026
+Para cada cliente seleccionado se presentan:
 
-Durante la Coder Cup se desarrolló **Envaplast Cobranzas AI**, una capacidad nueva que
-convierte la cartera abierta en una cola de gestión accionable. El puntaje combina saldo
-vencido, días de mora, uso del límite de crédito y concentración. Cada prioridad muestra sus
-factores, recomienda una acción y genera un borrador editable; ningún contacto se envía sin
-revisión humana.
+- prioridad y puntaje;
+- señales explicativas;
+- acción recomendada;
+- borrador editable y descargable.
 
-## 🖥️ Vista del producto
+## Qué significa “AI” en este MVP
 
-![Resumen ejecutivo de Envaplast Analytics](docs/assets/dashboard-overview.png)
+El scoring actual es **determinístico, transparente y basado en reglas**. No es un modelo predictivo, no estima una probabilidad de cobro y no fue entrenado con datos históricos.
 
-## Alcance entregado
+La propuesta de inteligencia asistida está en combinar señales, explicar la recomendación y preparar una acción revisable. Esta distinción evita presentar una regla de negocio como si fuera machine learning.
 
-- Cinco tableros conectados sobre un único modelo comercial.
-- Dieciocho meses de datos sintéticos reproducibles y trazables.
-- Carga incremental idempotente con controles automáticos de calidad.
-- Filtros globales y específicos, tablas explorables y exportación CSV.
-- Demo pública desplegada en Streamlit Community Cloud.
-- Documentación de arquitectura, modelo de datos, KPIs y despliegue.
+La fórmula, sus límites y el alcance futuro están documentados en [Definición de producto](docs/product-definition.md).
 
-## 💡 Mi enfoque
+## Human-in-the-loop
 
-Este proyecto no fue diseñado pensando únicamente en construir un dashboard.
+El sistema deliberadamente:
 
-El objetivo fue desarrollar un producto de datos que reprodujera un escenario real de negocio, integrando generación de datos, modelado, automatización, validación y visualización.
+- no envía correos ni mensajes;
+- no bloquea cuentas;
+- no modifica límites de crédito;
+- no decide condiciones comerciales;
+- no oculta los factores del ranking.
 
-Mi forma de trabajar parte siempre de las preguntas del negocio antes que de las herramientas.
+La persona responsable puede incorporar acuerdos, reclamos o documentación pendiente antes de actuar.
 
-## ¿Qué demuestra este proyecto?
+## Caso demostrativo
 
-- Comprensión de problemas de negocio.
-- Modelado relacional y SQL.
-- Desarrollo de procesos ETL reproducibles.
-- Automatización e idempotencia.
-- Validación y calidad de datos.
-- Diseño de indicadores comerciales y financieros.
-- Desarrollo de dashboards ejecutivos.
-- Documentación técnica y comunicación de resultados.
+Un cliente con saldo vencido alto, más de 90 días de mora, uso elevado del límite de crédito y participación material en la cartera obtiene prioridad crítica. La aplicación explica esas señales, recomienda contactarlo hoy y genera un borrador que puede editarse o descartarse.
+
+## Capacidades técnicas
+
+- Python, Pandas y SQLAlchemy.
+- Aplicación Streamlit y visualizaciones Plotly.
+- Modelo relacional compatible con SQLite/PostgreSQL.
+- Datos sintéticos reproducibles.
+- Generación determinística, transaccional e idempotente.
+- Pruebas específicas para priorización, casos vacíos y contenido del borrador.
+- Controles automáticos de calidad de datos.
+
+## Alcance actual
+
+### Entregado
+
+- ranking de clientes;
+- scoring de 0 a 100;
+- explicaciones y acciones recomendadas;
+- KPIs de cartera y cobertura;
+- borrador editable y descargable;
+- demo pública;
+- pruebas automatizadas.
+
+### Antes de Portfolio Ready v1.0
+
+- captura exclusiva de Cobranzas AI;
+- filtros de gestión;
+- historial y estado del caso;
+- compromiso de pago;
+- pruebas adicionales del scoring;
+- métricas de efectividad y tiempo ahorrado.
+
+El backlog priorizado está en [Roadmap](docs/roadmap.md).
 
 ## Arquitectura
 
 ```text
-Generador Python / GitHub Actions
-              │
-              ▼
- SQLite local ─── SQLAlchemy ─── PostgreSQL/Supabase
-              │
-              ▼
-     Servicios de métricas
-              │
-              ▼
-        Streamlit + Plotly
+Datos sintéticos reproducibles
+            │
+            ▼
+    Cartera de facturas
+            │
+            ▼
+ Agregación por cliente
+            │
+            ▼
+ Scoring + explicación
+            │
+            ▼
+ Cola priorizada y borrador
+            │
+            ▼
+      Revisión humana
 ```
 
-La decisión completa está en [docs/architecture.md](docs/architecture.md) y el modelo en [docs/data-model.md](docs/data-model.md).
-
-## Instalación local
+## Ejecutar localmente
 
 Requiere Python 3.12.
 
@@ -133,75 +151,21 @@ python scripts/init_db.py --months 18
 streamlit run app/app.py
 ```
 
-La aplicación queda disponible normalmente en `http://localhost:8501`. Si la base no existe, la aplicación crea automáticamente una demostración local.
-
-## Operación y calidad
+## Validación
 
 ```powershell
-# Fecha específica; repetirla no duplica registros
-python scripts/generate_daily.py --date 2026-07-20
-
-# Completar huecos hasta hoy
-python scripts/generate_daily.py --fill-missing
-
-# Calidad, tests y lint
-python scripts/validate_data.py
 pytest
 ruff check .
 ruff format --check .
+python scripts/validate_data.py
 ```
 
-Cada día usa una semilla derivada de `ENVAPLAST_SEED` y la fecha. `generation_runs.business_date` es único y la carga se confirma en una sola transacción.
+## Coder Cup 2026
 
-## Variables de entorno
+El producto fue creado como entrega independiente para Coder Cup 2026. El guion del pitch conserva el recorrido original de la competencia en [docs/video-script.md](docs/video-script.md).
 
-| Variable | Uso | Predeterminado |
-|---|---|---|
-| `DATABASE_URL` | URL SQLAlchemy de SQLite o PostgreSQL | `sqlite:///data/envaplast.db` |
-| `ENVAPLAST_SEED` | Semilla reproducible | `20260720` |
-| `ENVAPLAST_ENV` | Nombre del entorno | `development` |
+## Sobre mí
 
-Nunca se deben versionar `.env`, `secrets.toml` ni credenciales. Para PostgreSQL se recomienda `postgresql+psycopg://...`.
+Soy Matías Noero. Transformo información compleja en herramientas simples que ayudan a comprender el negocio y tomar mejores decisiones.
 
-## Automatización y despliegue
-
-El workflow `.github/workflows/daily-data.yml` se ejecuta diariamente o manualmente, exige `DATABASE_URL`, completa fechas faltantes y detiene el proceso si falla calidad o tests. La guía para Supabase y Streamlit Community Cloud está en [docs/deployment.md](docs/deployment.md). No se crean recursos externos automáticamente.
-
-La demo pública independiente está disponible en [Streamlit Community Cloud](https://codercup-cobranzas-ai.streamlit.app/).
-
-### Publicación rápida del portfolio
-
-El repositorio está preparado para desplegarse directamente en Streamlit Community Cloud:
-
-1. Publicar la rama `main` en GitHub.
-2. Crear una aplicación en `share.streamlit.io`.
-3. Seleccionar `app/app.py` como archivo principal y Python 3.12.
-4. Para una demo sin credenciales, no configurar secretos: la aplicación generará una SQLite sintética en el primer arranque.
-5. Para persistencia diaria, configurar `DATABASE_URL` con PostgreSQL/Supabase en los secretos de Streamlit y GitHub Actions.
-
-La SQLite del modo demostración puede regenerarse después de una suspensión o reinicio del contenedor. Esto no modifica las métricas esperadas porque el generador es reproducible.
-
-## KPIs
-
-Las definiciones formales están en [docs/kpi-definitions.md](docs/kpi-definitions.md). La comparación mensual usa el mismo número de días transcurridos; ABC usa facturación de los últimos 365 días con cortes acumulados 80/95%; cartera es factura menos cobranzas.
-
-## Roadmap
-
-Finanzas y proveedores, compras/producción/stock, costos e inflación, y activos de comunicación para portfolio están detallados en [docs/roadmap.md](docs/roadmap.md).
-
-## 👨‍💻 Sobre mí
-
-Soy Matías Noero.
-
-Transformo información compleja en herramientas simples que ayudan a comprender el negocio y tomar mejores decisiones.
-
-Actualmente desarrollo proyectos relacionados con:
-
-- Business Intelligence
-- Data Analytics
-- Automatización de procesos
-- Ciencia de Datos
-- Oil & Gas Analytics
-
-- GitHub: [github.com/mnoero23](https://github.com/mnoero23)
-- LinkedIn: [linkedin.com/in/matias-noero-samper](https://www.linkedin.com/in/matias-noero-samper/)
+[GitHub](https://github.com/mnoero23) · [LinkedIn](https://www.linkedin.com/in/matias-noero-samper/)
