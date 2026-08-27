@@ -15,6 +15,10 @@ PAGES = [
 ]
 
 app = AppTest.from_file(str(APP), default_timeout=120).run()
+if app.sidebar.radio[0].value != "Cobranzas AI":
+    raise RuntimeError("Cobranzas AI no es la pantalla pública inicial")
+if not app.dataframe:
+    raise RuntimeError("La pantalla inicial de Cobranzas AI no renderizó su ranking")
 results: dict[str, dict[str, int]] = {}
 for page in PAGES:
     app.sidebar.radio[0].set_value(page).run()
