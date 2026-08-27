@@ -51,13 +51,7 @@ from src.case_management import (
     load_collection_cases,
     save_collection_case,
 )
-from src.cobranzas import (
-    PRIORITY_THRESHOLDS,
-    SCORE_VERSION,
-    SCORE_WEIGHTS,
-    collection_message,
-    prioritize_receivables,
-)
+from src.cobranzas import collection_message, prioritize_receivables
 from src.database import engine
 from src.generator import create_schema, initialize_history
 from src.metrics import comparable_previous_period
@@ -70,6 +64,14 @@ NAVIGATION_ICONS = {
     "Cuentas corrientes": "account_balance_wallet",
     "Cobranzas AI": "auto_awesome",
     "Clientes y ABC": "groups",
+}
+SCORE_VERSION = "1.0"
+PRIORITY_THRESHOLDS = {"alta": 45, "critica": 70}
+SCORE_WEIGHTS = {
+    "saldo_vencido": 35,
+    "mora": 25,
+    "uso_credito": 20,
+    "concentracion": 20,
 }
 
 COMPANY_DESCRIPTION = (
@@ -473,10 +475,10 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             {
                 "Factor": ["Saldo vencido", "Mora", "Uso de crédito", "Concentración"],
                 "Aporte": [
-                    selected.overdue_contribution,
-                    selected.arrears_contribution,
-                    selected.credit_contribution,
-                    selected.concentration_contribution,
+                    getattr(selected, "overdue_contribution", 0),
+                    getattr(selected, "arrears_contribution", 0),
+                    getattr(selected, "credit_contribution", 0),
+                    getattr(selected, "concentration_contribution", 0),
                 ],
                 "Máximo": [
                     SCORE_WEIGHTS["saldo_vencido"],
