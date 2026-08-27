@@ -8,6 +8,8 @@ SCORE_WEIGHTS = {
     "uso_credito": 20,
     "concentracion": 20,
 }
+SCORE_VERSION = "1.0"
+PRIORITY_THRESHOLDS = {"alta": 45, "critica": 70}
 
 
 def _pesos(value: float) -> str:
@@ -20,9 +22,9 @@ def _safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
 
 
 def _priority_label(score: float) -> str:
-    if score >= 70:
+    if score >= PRIORITY_THRESHOLDS["critica"]:
         return "Crítica"
-    if score >= 45:
+    if score >= PRIORITY_THRESHOLDS["alta"]:
         return "Alta"
     return "Seguimiento"
 
@@ -62,6 +64,10 @@ def prioritize_receivables(receivables: pd.DataFrame) -> pd.DataFrame:
                 "credit_limit",
                 "credit_utilization",
                 "portfolio_share",
+                "overdue_contribution",
+                "arrears_contribution",
+                "credit_contribution",
+                "concentration_contribution",
                 "priority_score",
                 "priority",
                 "explanation",
@@ -88,13 +94,26 @@ def prioritize_receivables(receivables: pd.DataFrame) -> pd.DataFrame:
     max_overdue = max(queue.overdue_balance.max(), 1)
     queue["credit_utilization"] = _safe_ratio(queue.balance, queue.credit_limit)
     queue["portfolio_share"] = queue.balance / total_balance if total_balance else 0
-    queue["priority_score"] = (
-        (queue.overdue_balance / max_overdue).clip(upper=1) * SCORE_WEIGHTS["saldo_vencido"]
-        + (queue.max_days_past_due / 90).clip(upper=1) * SCORE_WEIGHTS["mora"]
-        + (queue.credit_utilization / 1.5).clip(upper=1) * SCORE_WEIGHTS["uso_credito"]
-        + (queue.portfolio_share / max(queue.portfolio_share.max(), 0.01)).clip(upper=1)
-        * SCORE_WEIGHTS["concentracion"]
-    ).round(1)
+    queue["overdue_contribution"] = (queue.overdue_balance / max_overdue).clip(
+        lower=0, upper=1
+    ) * SCORE_WEIGHTS["saldo_vencido"]
+    queue["arrears_contribution"] = (queue.max_days_past_due / 90).clip(
+        lower=0, upper=1
+    ) * SCORE_WEIGHTS["mora"]
+    queue["credit_contribution"] = (queue.credit_utilization / 1.5).clip(
+        lower=0, upper=1
+    ) * SCORE_WEIGHTS["uso_credito"]
+    queue["concentration_contribution"] = (
+        queue.portfolio_share / max(queue.portfolio_share.max(), 0.01)
+    ).clip(lower=0, upper=1) * SCORE_WEIGHTS["concentracion"]
+    contribution_columns = [
+        "overdue_contribution",
+        "arrears_contribution",
+        "credit_contribution",
+        "concentration_contribution",
+    ]
+    queue[contribution_columns] = queue[contribution_columns].round(1)
+    queue["priority_score"] = queue[contribution_columns].sum(axis=1).round(1)
     queue["priority"] = queue.priority_score.map(_priority_label)
     queue["explanation"] = queue.apply(_explanation, axis=1)
     queue["recommended_action"] = queue.apply(

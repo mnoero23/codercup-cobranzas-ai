@@ -51,7 +51,13 @@ from src.case_management import (
     load_collection_cases,
     save_collection_case,
 )
-from src.cobranzas import collection_message, prioritize_receivables
+from src.cobranzas import (
+    PRIORITY_THRESHOLDS,
+    SCORE_VERSION,
+    SCORE_WEIGHTS,
+    collection_message,
+    prioritize_receivables,
+)
 from src.database import engine
 from src.generator import create_schema, initialize_history
 from src.metrics import comparable_previous_period
@@ -419,6 +425,11 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
         "Prioridades de hoy",
         "Ranking transparente: cada caso muestra los factores que explican su posición.",
     )
+    st.caption(
+        f"Scoring v{SCORE_VERSION} · Umbrales: Alta ≥ {PRIORITY_THRESHOLDS['alta']} y "
+        f"Crítica ≥ {PRIORITY_THRESHOLDS['critica']} puntos. El ranking se recalcula sobre "
+        "la cartera completa antes de aplicar los filtros de gestión."
+    )
     display = top_ten[
         [
             "priority",
@@ -458,6 +469,25 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
     with left:
         st.markdown(f"**Prioridad:** {selected.priority} · {selected.priority_score:.1f}/100")
         st.markdown(f"**Señales:** {selected.explanation}.")
+        contributions = pd.DataFrame(
+            {
+                "Factor": ["Saldo vencido", "Mora", "Uso de crédito", "Concentración"],
+                "Aporte": [
+                    selected.overdue_contribution,
+                    selected.arrears_contribution,
+                    selected.credit_contribution,
+                    selected.concentration_contribution,
+                ],
+                "Máximo": [
+                    SCORE_WEIGHTS["saldo_vencido"],
+                    SCORE_WEIGHTS["mora"],
+                    SCORE_WEIGHTS["uso_credito"],
+                    SCORE_WEIGHTS["concentracion"],
+                ],
+            }
+        )
+        with st.expander("Ver composición del puntaje"):
+            st.dataframe(contributions, hide_index=True, width="stretch")
         st.info(selected.recommended_action, icon=":material/task_alt:")
         st.caption(
             "El ranking es una recomendación explicable. La decisión y el contacto permanecen "
@@ -603,7 +633,7 @@ def main() -> None:
     bootstrap()
     with st.sidebar:
         st.image(str(APP_DIR / "assets" / "envaplast-logo.svg"), width=210)
-        st.html('<div class="st-key-sidebar_tagline">INTELIGENCIA COMERCIAL</div>')
+        st.html('<div class="st-key-sidebar_tagline">COBRANZAS AI</div>')
         sidebar_section("PLATAFORMA")
         with st.expander("Sobre la empresa", icon=":material/factory:"):
             st.write(COMPANY_DESCRIPTION)
@@ -613,6 +643,7 @@ def main() -> None:
             list(NAVIGATION_ICONS),
             format_func=lambda option: f":material/{NAVIGATION_ICONS[option]}: {option}",
             key="navigation",
+            index=list(NAVIGATION_ICONS).index("Cobranzas AI"),
             width="stretch",
             label_visibility="collapsed",
         )

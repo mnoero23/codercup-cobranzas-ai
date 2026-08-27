@@ -131,7 +131,7 @@ class ManagementAlert:
 
 def setup_page() -> None:
     st.set_page_config(
-        page_title="Envaplast Analytics",
+        page_title="Envaplast Cobranzas AI",
         page_icon=":material/analytics:",
         layout="wide",
     )
