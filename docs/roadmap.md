@@ -23,12 +23,12 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 
 ## P1 · Calidad del scoring · requisito para v1.0
 
-- [ ] Probar límites exactos de 45 y 70 puntos.
-- [ ] Probar crédito cero y saldos negativos o inconsistentes.
-- [ ] Evaluar sensibilidad ante cambios de composición de la cartera.
-- [ ] Documentar el efecto de filtros y normalización relativa.
-- [ ] Versionar pesos y umbrales.
-- [ ] Incorporar una vista o detalle de contribución por factor.
+- [x] Probar límites exactos de 45 y 70 puntos.
+- [x] Probar crédito cero y saldos negativos o inconsistentes.
+- [x] Evaluar sensibilidad ante cambios de composición de la cartera.
+- [x] Documentar el efecto de filtros y normalización relativa.
+- [x] Versionar pesos y umbrales.
+- [x] Incorporar una vista o detalle de contribución por factor.
 
 ## P2 · Medición
 
