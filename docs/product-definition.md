@@ -1,5 +1,17 @@
 # Definición de producto · Envaplast Cobranzas AI
 
+## Scoring v1.0 y efecto de los filtros
+
+El puntaje se calcula primero sobre la cartera abierta completa. Saldo vencido y concentración
+se normalizan de forma relativa contra la composición del conjunto; por eso el puntaje de un
+cliente puede cambiar cuando cambia la cartera, aunque sus propios datos permanezcan iguales.
+Los filtros de prioridad, estado y responsable se aplican después del cálculo: acotan la cola
+visible, pero no recalculan ni alteran el orden relativo de los casos que permanecen visibles.
+
+Los saldos nulos o negativos se excluyen de la cola. Un límite de crédito igual a cero aporta
+cero al factor de utilización y no provoca divisiones inválidas. Los umbrales de clasificación
+son inclusivos: 45 puntos inicia prioridad Alta y 70 puntos inicia prioridad Crítica.
+
 ## Propósito
 
 Envaplast Cobranzas AI ayuda a una persona responsable de cobranzas en una PyME a decidir **qué cuenta gestionar primero, por qué y cuál es el siguiente paso sugerido**.
