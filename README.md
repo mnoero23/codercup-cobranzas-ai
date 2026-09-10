@@ -76,6 +76,8 @@ La propuesta de inteligencia asistida está en combinar señales, explicar la re
 
 La fórmula, sus límites y el alcance futuro están documentados en [Definición de producto](docs/product-definition.md).
 
+Los textos y metadatos preparados para el lanzamiento se encuentran en el [Kit de publicación](docs/publication-kit.md).
+
 ## Human-in-the-loop
 
 El sistema deliberadamente:
