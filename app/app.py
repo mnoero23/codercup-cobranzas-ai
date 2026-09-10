@@ -50,6 +50,7 @@ from src.case_management import (
     load_case_events,
     load_collection_cases,
     save_collection_case,
+    seed_demo_cases,
 )
 from src.cobranzas import collection_message, prioritize_receivables
 from src.database import engine
@@ -89,6 +90,7 @@ def bootstrap() -> bool:
         order_count = connection.scalar(select(func.count()).select_from(Order)) or 0
     if order_count == 0:
         initialize_history(engine)
+    seed_demo_cases(date.today(), engine)
     return True
 
 
@@ -405,6 +407,8 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
         return
 
     top_ten = queue.head(10)
+    balance_only_ids = set(queue.nlargest(10, "balance").customer_id)
+    scoring_only_cases = len(set(top_ten.customer_id) - balance_only_ids)
     section_heading(
         "Impacto potencial",
         "El puntaje combina saldo vencido, mora, uso del límite de crédito y concentración.",
@@ -426,6 +430,15 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
     section_heading(
         "Prioridades de hoy",
         "Ranking transparente: cada caso muestra los factores que explican su posición.",
+    )
+    st.caption(
+        "La demo incluye casos sintéticos en distintas etapas para mostrar asignación, "
+        "compromisos, resolución e historial sin utilizar información real."
+    )
+    st.caption(
+        f"En esta cartera, el scoring incorpora {scoring_only_cases} "
+        f"{'caso' if scoring_only_cases == 1 else 'casos'} al top 10 que "
+        "quedarían fuera al ordenar únicamente por saldo."
     )
     st.caption(
         f"Scoring v{SCORE_VERSION} · Umbrales: Alta ≥ {PRIORITY_THRESHOLDS['alta']} y "

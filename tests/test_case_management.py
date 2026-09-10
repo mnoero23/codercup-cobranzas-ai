@@ -10,6 +10,7 @@ from src.case_management import (
     load_case_events,
     load_collection_cases,
     save_collection_case,
+    seed_demo_cases,
 )
 from src.models import Customer
 
@@ -99,3 +100,44 @@ def test_enrich_queue_uses_defaults_and_saved_case_state():
     assert result.loc[result.customer_id == 10, "status"].item() == "resuelto"
     assert result.loc[result.customer_id == 20, "status"].item() == "pendiente"
     assert result.loc[result.customer_id == 20, "owner"].item() == "Sin asignar"
+
+
+def test_seed_demo_cases_is_idempotent_and_preserves_existing_activity(test_engine):
+    for customer_id in [1, 6, 8]:
+        with Session(test_engine) as session, session.begin():
+            session.add(
+                Customer(
+                    customer_id=customer_id,
+                    customer_name=f"Cliente demo {customer_id}",
+                    tax_id=f"30-7000000{customer_id}-1",
+                    segment="Mayorista",
+                    province="Córdoba",
+                    region="Centro",
+                    credit_limit=Decimal("100000000.00"),
+                    payment_terms_days=30,
+                )
+            )
+
+    save_collection_case(
+        6,
+        status="contactado",
+        owner="Gestión real",
+        note="No debe sobrescribirse.",
+        promise_date=None,
+        promise_amount=None,
+        target_engine=test_engine,
+    )
+
+    first = seed_demo_cases(date(2026, 9, 10), test_engine)
+    second = seed_demo_cases(date(2026, 9, 10), test_engine)
+    cases = load_collection_cases(test_engine)
+
+    assert first == {"cases": 2, "events": 4}
+    assert second == {"cases": 0, "events": 0}
+    assert len(cases) == 3
+    existing = cases[cases.customer_id == 6].iloc[0]
+    committed = cases[cases.customer_id == 8].iloc[0]
+    assert existing.owner == "Gestión real"
+    assert existing.last_note == "No debe sobrescribirse."
+    assert committed.status == "comprometido"
+    assert committed.promise_amount == Decimal("30000000.00")

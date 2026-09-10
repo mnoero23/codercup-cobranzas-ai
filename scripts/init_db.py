@@ -4,6 +4,7 @@ import argparse
 import json
 from datetime import date
 
+from src.case_management import seed_demo_cases
 from src.database import engine
 from src.generator import create_schema, initialize_history
 
@@ -12,6 +13,6 @@ parser.add_argument("--end-date", type=date.fromisoformat, default=date.today())
 parser.add_argument("--months", type=int, default=18)
 args = parser.parse_args()
 create_schema(engine)
-print(
-    json.dumps(initialize_history(engine, args.end_date, args.months), indent=2, ensure_ascii=False)
-)
+result = initialize_history(engine, args.end_date, args.months)
+result["demo_management"] = seed_demo_cases(args.end_date, engine)
+print(json.dumps(result, indent=2, ensure_ascii=False))
