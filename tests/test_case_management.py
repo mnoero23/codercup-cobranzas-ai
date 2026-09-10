@@ -10,8 +10,8 @@ from src.case_management import (
     load_case_events,
     load_collection_cases,
     save_collection_case,
-    seed_demo_cases,
 )
+from src.demo_cases import seed_demo_cases
 from src.models import Customer
 
 

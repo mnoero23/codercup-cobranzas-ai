@@ -4,8 +4,8 @@ import argparse
 import json
 from datetime import date
 
-from src.case_management import seed_demo_cases
 from src.database import engine
+from src.demo_cases import seed_demo_cases
 from src.generator import create_schema, initialize_history
 
 parser = argparse.ArgumentParser(description="Inicializa el histórico sintético de Envaplast")
