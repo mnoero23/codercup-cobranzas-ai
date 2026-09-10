@@ -600,7 +600,29 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
     history = load_case_events(int(selected.customer_id), engine)
     if not history.empty:
         section_heading("Historial del caso", "Trazabilidad de las gestiones registradas.")
-        dataframe(history, key=f"case_history_{selected.customer_id}", height=260)
+        history_display = history.rename(
+            columns={
+                "created_at": "Fecha",
+                "status": "Estado",
+                "owner": "Responsable",
+                "note": "Nota",
+                "promise_date": "Fecha compromiso",
+                "promise_amount": "Importe comprometido",
+            }
+        )
+        history_display["Fecha"] = pd.to_datetime(history_display["Fecha"]).dt.strftime(
+            "%d/%m/%Y %H:%M"
+        )
+        history_display["Estado"] = history_display["Estado"].str.title()
+        history_display["Responsable"] = history_display["Responsable"].fillna("—")
+        history_display["Nota"] = history_display["Nota"].fillna("—")
+        history_display["Fecha compromiso"] = history_display["Fecha compromiso"].map(
+            lambda value: pd.Timestamp(value).strftime("%d/%m/%Y") if pd.notna(value) else "—"
+        )
+        history_display["Importe comprometido"] = history_display["Importe comprometido"].map(
+            lambda value: money(float(value)) if pd.notna(value) else "—"
+        )
+        dataframe(history_display, key=f"case_history_{selected.customer_id}", height=260)
 
 
 def abc_page(abc: pd.DataFrame, sales: pd.DataFrame, start: date, end: date) -> None:
