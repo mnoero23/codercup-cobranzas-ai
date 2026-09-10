@@ -473,6 +473,14 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
             "explanation": "Por qué aparece aquí",
         }
     )
+    display["Puntaje"] = display["Puntaje"].map(lambda value: f"{value:.1f}")
+    display["Saldo"] = display["Saldo"].map(money)
+    display["Vencido"] = display["Vencido"].map(money)
+    display["Mora máxima"] = display["Mora máxima"].map(lambda value: f"{int(value)} días")
+    display["Estado"] = display["Estado"].str.title()
+    display["Compromiso"] = display["Compromiso"].map(
+        lambda value: pd.Timestamp(value).strftime("%d/%m/%Y") if pd.notna(value) else "—"
+    )
     dataframe(display, key="collections_ai_table", height=390)
 
     section_heading(

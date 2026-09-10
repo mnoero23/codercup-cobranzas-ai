@@ -1,16 +1,18 @@
-# 🏆 Envaplast Cobranzas AI · Coder Cup 2026
+# Envaplast Cobranzas AI
 
 > **De una cartera dispersa a una prioridad clara de gestión.**
 
 [🚀 Ver demo en vivo](https://codercup-cobranzas-ai.streamlit.app/)
 
-**Estado:** MVP funcional desarrollado para Coder Cup 2026 · en evolución hacia Portfolio Ready v1.0.
+**Estado:** release candidate funcional · cierre Portfolio Ready v1.0.
 
 Envaplast Cobranzas AI convierte una cartera abierta en una cola de trabajo explicable: prioriza clientes, muestra las señales que sostienen el ranking, recomienda el siguiente paso y genera un borrador editable. La decisión y el contacto permanecen siempre bajo revisión humana.
 
 El proyecto utiliza el contexto comercial y los datos sintéticos de [Envaplast Analytics](https://github.com/mnoero23/envaplast-analytics), pero la experiencia de cobranzas, el scoring y el flujo de gestión fueron desarrollados específicamente para la competencia.
 
 > Envaplast, sus clientes, documentos y operaciones son ficticios. No representan personas ni empresas reales.
+
+![Vista principal de Cobranzas AI](docs/assets/cobranzas-ai-dashboard.jpg)
 
 ## El problema
 
@@ -30,7 +32,8 @@ El MVP propone un flujo simple:
 3. **Explicar** por qué cada cuenta aparece en esa posición.
 4. **Recomendar** el siguiente paso de gestión.
 5. **Preparar** un borrador editable.
-6. **Revisar** antes de cualquier comunicación.
+6. **Gestionar** responsables, estados, notas y compromisos de pago.
+7. **Revisar** antes de cualquier comunicación y conservar la trazabilidad.
 
 ## Flujo principal
 
@@ -60,6 +63,9 @@ Para cada cliente seleccionado se presentan:
 - acción recomendada;
 - borrador editable y descargable.
 
+La gestión se completa con responsable, estado, nota, compromiso de pago e historial. Los
+casos resueltos salen de la cola activa sin perder su trazabilidad.
+
 ## Qué significa “AI” en este MVP
 
 El scoring actual es **determinístico, transparente y basado en reglas**. No es un modelo predictivo, no estima una probabilidad de cobro y no fue entrenado con datos históricos.
@@ -80,9 +86,14 @@ El sistema deliberadamente:
 
 La persona responsable puede incorporar acuerdos, reclamos o documentación pendiente antes de actuar.
 
-## Caso demostrativo
+## Caso de negocio
 
-Un cliente con saldo vencido alto, más de 90 días de mora, uso elevado del límite de crédito y participación material en la cartera obtiene prioridad crítica. La aplicación explica esas señales, recomienda contactarlo hoy y genera un borrador que puede editarse o descartarse.
+Una PyME con una cartera extensa necesita decidir dónde concentrar las horas disponibles del
+equipo. Cobranzas AI compara exposición, mora, utilización de crédito y concentración; luego
+convierte esa prioridad en una gestión asignable y auditable.
+
+La demo incluye casos sintéticos contactados, comprometidos y resueltos. El caso completo,
+las decisiones y el impacto esperado se encuentran en [Caso de negocio](docs/business-case.md).
 
 ## Capacidades técnicas
 
@@ -91,7 +102,7 @@ Un cliente con saldo vencido alto, más de 90 días de mora, uso elevado del lí
 - Modelo relacional compatible con SQLite/PostgreSQL.
 - Datos sintéticos reproducibles.
 - Generación determinística, transaccional e idempotente.
-- Pruebas específicas para priorización, casos vacíos y contenido del borrador.
+- 19 pruebas automatizadas sobre datos, scoring, casos límite y gestión.
 - Controles automáticos de calidad de datos.
 
 ## Alcance actual
@@ -109,11 +120,11 @@ Un cliente con saldo vencido alto, más de 90 días de mora, uso elevado del lí
 - demo pública;
 - pruebas automatizadas.
 
-### Antes de Portfolio Ready v1.0
+### Cierre pendiente para v1.0
 
-- captura exclusiva de Cobranzas AI;
-- pruebas adicionales del scoring;
-- métricas de efectividad y tiempo ahorrado.
+- video demostrativo actualizado;
+- verificación visual final en escritorio y móvil;
+- release pública `v1.0.0`.
 
 El backlog priorizado está en [Roadmap](docs/roadmap.md).
 
@@ -132,10 +143,10 @@ Datos sintéticos reproducibles
  Scoring + explicación
             │
             ▼
- Cola priorizada y borrador
+ Cola priorizada y gestión
             │
             ▼
-      Revisión humana
+ Historial + revisión humana
 ```
 
 ## Ejecutar localmente
@@ -160,9 +171,20 @@ ruff format --check .
 python scripts/validate_data.py
 ```
 
-## Coder Cup 2026
+Estado verificado del release candidate:
 
-El producto fue creado como entrega independiente para Coder Cup 2026. El guion del pitch conserva el recorrido original de la competencia en [docs/video-script.md](docs/video-script.md).
+- 19 pruebas aprobadas;
+- Ruff y formato aprobados;
+- 8/8 controles de calidad;
+- inicialización determinística e idempotente;
+- demo pública con persistencia verificada.
+
+## Origen
+
+El producto nació como entrega independiente para Coder Cup 2026 y evolucionó hasta incorporar
+gestión persistente, trazabilidad y una narrativa de negocio propia. El recorrido actualizado
+está disponible en [Guion de video](docs/video-script.md) y
+[Recorrido demostrativo](docs/demo-walkthrough.md).
 
 ## Sobre mí
 
