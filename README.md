@@ -14,6 +14,8 @@ El proyecto utiliza el contexto comercial y los datos sintéticos de [Envaplast 
 
 ![Vista principal de Cobranzas AI](docs/assets/cobranzas-ai-dashboard.jpg)
 
+![Gestión e historial de un caso comprometido](docs/assets/cobranzas-ai-gestion.jpg)
+
 ## El problema
 
 Cuando la cartera se gestiona entre planillas y sistemas separados, ordenar solo por saldo o por días de mora puede enfocar el esfuerzo en cuentas de bajo impacto. Una PyME necesita responder rápidamente:
