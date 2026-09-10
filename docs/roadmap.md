@@ -41,6 +41,9 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 ## P2 · Portfolio Ready
 
 - [ ] Captura y recorrido visual propios.
+- [x] Recorrido demostrativo de 60–90 segundos.
+- [x] Casos sintéticos con gestión, compromiso, resolución e historial.
+- [x] Comparación del ranking contra el ordenamiento sólo por saldo.
 - [ ] Caso de punta a punta documentado.
 - [ ] Demo verificada en escritorio y móvil.
 - [ ] Tests, lint y calidad aprobados.
