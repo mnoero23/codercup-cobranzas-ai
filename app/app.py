@@ -438,7 +438,8 @@ def collections_ai_page(ar: pd.DataFrame, start: date, end: date) -> None:
     st.caption(
         f"En esta cartera, el scoring incorpora {scoring_only_cases} "
         f"{'caso' if scoring_only_cases == 1 else 'casos'} al top 10 que "
-        "quedarían fuera al ordenar únicamente por saldo."
+        f"{'quedaría' if scoring_only_cases == 1 else 'quedarían'} fuera al ordenar "
+        "únicamente por saldo."
     )
     st.caption(
         f"Scoring v{SCORE_VERSION} · Umbrales: Alta ≥ {PRIORITY_THRESHOLDS['alta']} y "
