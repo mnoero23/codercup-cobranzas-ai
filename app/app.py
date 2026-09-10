@@ -50,10 +50,10 @@ from src.case_management import (
     load_case_events,
     load_collection_cases,
     save_collection_case,
-    seed_demo_cases,
 )
 from src.cobranzas import collection_message, prioritize_receivables
 from src.database import engine
+from src.demo_cases import seed_demo_cases
 from src.generator import create_schema, initialize_history
 from src.metrics import comparable_previous_period
 from src.models import Order
