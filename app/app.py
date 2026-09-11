@@ -681,7 +681,7 @@ def main() -> None:
         st.image(str(APP_DIR / "assets" / "cobranzas-ai-logo.svg"), width=235)
         st.html('<div class="st-key-sidebar_tagline">DECISIONES DE COBRO</div>')
         sidebar_section("PLATAFORMA")
-        with st.expander("Sobre la empresa", icon=":material/factory:"):
+        with st.expander("Sobre los datos", icon=":material/database:"):
             st.write(COMPANY_DESCRIPTION)
         sidebar_section("TABLEROS")
         page = st.radio(

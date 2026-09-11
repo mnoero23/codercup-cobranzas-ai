@@ -131,7 +131,7 @@ class ManagementAlert:
 
 def setup_page() -> None:
     st.set_page_config(
-        page_title="Envaplast Cobranzas AI",
+        page_title="Cobranzas AI · Gestión explicable",
         page_icon=":material/finance_mode:",
         layout="wide",
     )
@@ -418,7 +418,7 @@ def header(
     with st.container(key="executive_header"):
         main, metadata = st.columns([4, 1.25], vertical_alignment="center")
         with main:
-            st.caption("ENVAPLAST · INTELIGENCIA COMERCIAL")
+            st.caption("COBRANZAS AI · GESTIÓN EXPLICABLE")
             st.title(title, anchor=False)
             st.caption(subtitle)
         with metadata:
