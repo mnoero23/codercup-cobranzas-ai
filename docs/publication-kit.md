@@ -88,9 +88,10 @@ Fue desarrollada con Python, SQL y Streamlit sobre datos sintéticos reproducibl
 
 ## Control previo a publicar
 
-- [ ] Configurar descripción, homepage y topics del repositorio.
-- [ ] Crear la release `v1.0.0` desde `main` y marcarla como latest.
-- [ ] Abrir la demo desde los enlaces de GitHub y LinkedIn.
-- [ ] Revisar la vista móvil desde un teléfono real.
-- [ ] Confirmar que no aparezcan datos personales ni de Net-Log.
+- [x] Configurar descripción, homepage y topics del repositorio.
+- [x] Crear la release `v1.0.0` desde `main` y marcarla como latest.
+- [x] Abrir la demo desde GitHub.
+- [x] Revisar la vista móvil desde un teléfono real.
+- [x] Confirmar que no aparezcan datos personales ni de Net-Log.
+- [ ] Abrir la demo desde el borrador final de LinkedIn.
 - [ ] Publicar en LinkedIn solamente después de revisar el texto final.

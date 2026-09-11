@@ -4,7 +4,7 @@
 
 [🚀 Ver demo en vivo](https://codercup-cobranzas-ai.streamlit.app/)
 
-**Estado:** release candidate funcional · cierre Portfolio Ready v1.0.
+**Estado:** versión estable `v1.0.0` · Portfolio Ready.
 
 Envaplast Cobranzas AI convierte una cartera abierta en una cola de trabajo explicable: prioriza clientes, muestra las señales que sostienen el ranking, recomienda el siguiente paso y genera un borrador editable. La decisión y el contacto permanecen siempre bajo revisión humana.
 
@@ -175,7 +175,7 @@ ruff format --check .
 python scripts/validate_data.py
 ```
 
-Estado verificado del release candidate:
+Estado verificado de `v1.0.0`:
 
 - 19 pruebas aprobadas;
 - Ruff y formato aprobados;
