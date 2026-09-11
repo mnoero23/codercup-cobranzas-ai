@@ -9,7 +9,7 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 - [x] Diferenciar reglas determinísticas, automatización y modelos predictivos.
 - [x] Reescribir el README alrededor de Cobranzas AI.
 - [x] Declarar límites de revisión humana.
-- [ ] Incorporar captura exclusiva de la pantalla Cobranzas AI.
+- [x] Incorporar captura exclusiva de la pantalla Cobranzas AI.
 
 ## P1 · Gestión de casos · requisito para v1.0
 
@@ -45,11 +45,15 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 - [x] Casos sintéticos con gestión, compromiso, resolución e historial.
 - [x] Comparación del ranking contra el ordenamiento sólo por saldo.
 - [x] Caso de punta a punta documentado.
-- [ ] Demo verificada en escritorio y móvil.
+- [x] Demo verificada en escritorio y móvil.
 - [x] Tests, lint y calidad aprobados.
-- [ ] Descripción, homepage y topics del repositorio.
-- [ ] Release pública `v1.0.0`.
+- [x] Descripción, homepage y topics del repositorio.
+- [x] Release pública `v1.0.0`.
+
+## P3 · Difusión
+
 - [ ] Actualización definitiva del perfil MN8.
+- [ ] Publicación en LinkedIn.
 
 ## Fuera de alcance actual
 
