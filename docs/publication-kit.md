@@ -93,5 +93,5 @@ Fue desarrollada con Python, SQL y Streamlit sobre datos sintéticos reproducibl
 - [x] Abrir la demo desde GitHub.
 - [x] Revisar la vista móvil desde un teléfono real.
 - [x] Confirmar que no aparezcan datos personales ni de Net-Log.
-- [ ] Abrir la demo desde el borrador final de LinkedIn.
-- [ ] Publicar en LinkedIn solamente después de revisar el texto final.
+- [x] Abrir la demo desde la publicación final de LinkedIn.
+- [x] Publicar en LinkedIn después de revisar el texto final.
