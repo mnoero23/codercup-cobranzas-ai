@@ -53,7 +53,7 @@ El roadmap prioriza la evolución del MVP de competencia hacia un producto de po
 ## P3 · Difusión
 
 - [ ] Actualización definitiva del perfil MN8.
-- [ ] Publicación en LinkedIn.
+- [x] Publicación en LinkedIn.
 
 ## Fuera de alcance actual
 
