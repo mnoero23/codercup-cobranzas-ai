@@ -1,6 +1,6 @@
 [theme]
 base = "light"
-primaryColor = "#0F766E"
+primaryColor = "#6D5CE7"
 backgroundColor = "#F3F6F7"
 secondaryBackgroundColor = "#FFFFFF"
 textColor = "#172B35"
@@ -9,7 +9,7 @@ headingFont = "'IBM Plex Sans':https://fonts.googleapis.com/css2?family=IBM+Plex
 borderColor = "#D7E0E3"
 dataframeBorderColor = "#D7E0E3"
 dataframeHeaderBackgroundColor = "#E8EEF0"
-chartCategoricalColors = ["#0F766E", "#1B4965", "#D49A35", "#C45B45", "#6D7E87"]
+chartCategoricalColors = ["#4F46E5", "#8B5CF6", "#F59E0B", "#E76F51", "#64748B"]
 baseRadius = "12px"
 buttonRadius = "10px"
 showWidgetBorder = true
@@ -19,9 +19,9 @@ headingFontSizes = ["2rem", "1.35rem", "1.05rem", "0.95rem", "0.85rem", "0.75rem
 headingFontWeights = [700, 600, 600, 600, 600, 600]
 linkUnderline = false
 blueColor = "#1B4965"
-greenColor = "#0F766E"
-greenBackgroundColor = "#DDF3EF"
-greenTextColor = "#0A5B55"
+greenColor = "#6D5CE7"
+greenBackgroundColor = "#EEEBFF"
+greenTextColor = "#4738B8"
 yellowColor = "#D49A35"
 orangeColor = "#C9782C"
 orangeBackgroundColor = "#F8E9D8"
@@ -32,11 +32,11 @@ redTextColor = "#8F3A2B"
 grayColor = "#61747E"
 
 [theme.sidebar]
-backgroundColor = "#102A34"
-secondaryBackgroundColor = "#173A45"
+backgroundColor = "#1C1833"
+secondaryBackgroundColor = "#272341"
 textColor = "#F2F8F9"
-primaryColor = "#67D2C4"
-borderColor = "#294B56"
+primaryColor = "#A99DF4"
+borderColor = "#3B365A"
 
 [server]
 headless = true
