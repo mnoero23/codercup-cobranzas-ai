@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-labelledby="title desc">
+  <title id="title">Cobranzas AI</title>
+  <desc id="desc">Cola priorizada con tres niveles y una marca de decisión</desc>
+  <g transform="translate(16 12)">
+    <rect width="72" height="72" rx="18" fill="#6D5CE7"/>
+    <circle cx="23" cy="23" r="5" fill="#F8B84E"/>
+    <circle cx="23" cy="36" r="5" fill="#FFFFFF" opacity="0.92"/>
+    <circle cx="23" cy="49" r="5" fill="#FFFFFF" opacity="0.68"/>
+    <path d="M35 23h18M35 36h12M35 49h9" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+    <path d="M45 54l6 6 12-15" fill="none" stroke="#F8B84E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="104" y="44" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#FFFFFF">Cobranzas</text>
+  <text x="274" y="44" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#A99DF4">AI</text>
+  <text x="106" y="67" font-family="Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="2.4" fill="#B9B5D8">PRIORIDAD · ACCIÓN</text>
+</svg>

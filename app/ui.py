@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-COLORS = ["#1B4965", "#2A9D8F", "#D9A441", "#D86C4F", "#71808C"]
+COLORS = ["#4F46E5", "#8B5CF6", "#F59E0B", "#E76F51", "#64748B"]
 
 MONEY_COLUMNS = {
     "subtotal",
@@ -132,7 +132,7 @@ class ManagementAlert:
 def setup_page() -> None:
     st.set_page_config(
         page_title="Envaplast Cobranzas AI",
-        page_icon=":material/analytics:",
+        page_icon=":material/finance_mode:",
         layout="wide",
     )
     st.html(
@@ -150,7 +150,7 @@ def setup_page() -> None:
             letter-spacing: -0.025em;
         }
         .section-heading {
-            border-left: 3px solid #2a9d8f;
+            border-left: 3px solid #6d5ce7;
             margin: 1.2rem 0 0.62rem;
             padding: 0.04rem 0 0.04rem 0.68rem;
         }
@@ -168,14 +168,14 @@ def setup_page() -> None:
             margin: 0.12rem 0 0;
         }
         .st-key-company_profile {
-            background: linear-gradient(100deg, #e8f3f1 0%, #ffffff 72%);
-            border-color: #cfe1de;
+            background: linear-gradient(100deg, #f0eefc 0%, #ffffff 72%);
+            border-color: #ddd8f5;
             box-shadow: none;
             margin-top: 0.8rem;
             padding: 0.7rem 0.85rem;
         }
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #102f3d 0%, #0b2632 100%);
+            background: linear-gradient(180deg, #1c1833 0%, #111827 100%);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
         [data-testid="stSidebar"] [data-testid="stSidebarContent"] {
@@ -184,7 +184,7 @@ def setup_page() -> None:
         [data-testid="stSidebar"] p,
         [data-testid="stSidebar"] label,
         [data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
-            color: #d8e5e9;
+            color: #e5e3f2;
         }
         [data-testid="stSidebar"] [data-testid="stImage"] {
             margin: 0 auto 0.15rem;
@@ -213,9 +213,9 @@ def setup_page() -> None:
             border-color: rgba(255, 255, 255, 0.10);
         }
         [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
-            background: rgba(42, 157, 143, 0.22);
-            border-color: rgba(89, 201, 188, 0.55);
-            box-shadow: inset 3px 0 0 #4fc3b3;
+            background: rgba(109, 92, 231, 0.24);
+            border-color: rgba(169, 157, 244, 0.58);
+            box-shadow: inset 3px 0 0 #8b7cf0;
         }
         [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) p {
             color: #ffffff;
@@ -229,23 +229,23 @@ def setup_page() -> None:
             border-color: rgba(255, 255, 255, 0.18);
         }
         .sidebar-section-label {
-            color: #78d4c8;
+            color: #a99df4;
             font-size: 0.68rem;
             font-weight: 750;
             letter-spacing: 0.13em;
             margin: 0.9rem 0 0.38rem;
         }
         .sidebar-subtitle {
-            color: #a9c3cc;
+            color: #b9b5d8;
             font-size: 0.82rem;
             line-height: 1.35;
             margin-top: -0.25rem;
         }
         .sidebar-synthetic {
-            background: rgba(42, 157, 143, 0.14);
-            border: 1px solid rgba(89, 201, 188, 0.32);
+            background: rgba(109, 92, 231, 0.14);
+            border: 1px solid rgba(169, 157, 244, 0.34);
             border-radius: 11px;
-            color: #dff8f4;
+            color: #f0eefc;
             font-size: 0.79rem;
             line-height: 1.45;
             margin-top: 0.9rem;
@@ -262,7 +262,7 @@ def setup_page() -> None:
         [data-testid="stMetric"] {
             background: linear-gradient(145deg, #ffffff 0%, #fbfcfc 100%);
             border-color: #d7e0e3;
-            border-top: 3px solid #0f766e;
+            border-top: 3px solid #6d5ce7;
             box-shadow: 0 5px 16px rgba(20, 48, 60, 0.055);
             padding: 0.72rem 0.82rem 0.68rem;
         }
@@ -299,7 +299,7 @@ def setup_page() -> None:
             min-width: 0;
         }
         [data-testid="stMetricDelta"] {
-            background: #e7f2f0;
+            background: #eeebff;
             border-radius: 999px;
             padding: 0.13rem 0.42rem;
             width: fit-content;
@@ -313,7 +313,7 @@ def setup_page() -> None:
             min-width: 0;
         }
         .st-key-executive_header {
-            background: linear-gradient(112deg, #173f4c 0%, #102a34 72%, #0f766e 145%);
+            background: linear-gradient(112deg, #312e81 0%, #1c1833 70%, #6d5ce7 145%);
             border: 0;
             border-radius: 14px;
             box-shadow: 0 10px 28px rgba(16, 42, 52, 0.16);
@@ -327,11 +327,11 @@ def setup_page() -> None:
             padding-bottom: 0.12rem;
         }
         .st-key-executive_header p {
-            color: #d8e8eb;
+            color: #ebe9f7;
             line-height: 1.45;
         }
         .st-key-executive_header [data-testid="stCaptionContainer"] {
-            color: #b9d0d5;
+            color: #c9c5e4;
         }
         .st-key-executive_header [data-testid="stBadge"] {
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
@@ -352,7 +352,7 @@ def setup_page() -> None:
             box-shadow: none;
         }
         .st-key-sidebar_tagline {
-            color: #a9c4cb;
+            color: #b9b5d8;
             font-size: 0.7rem;
             font-weight: 600;
             letter-spacing: 0.1em;
@@ -448,7 +448,7 @@ def sidebar_footer() -> None:
     st.html(
         """
         <div class="sidebar-footer">
-            © 2026 Envaplast Analytics<br>
+            © 2026 Cobranzas AI<br>
             Todos los derechos reservados.
         </div>
         """
@@ -656,11 +656,11 @@ def style_figure(
         axis(ticksuffix=" %", tickformat=".1f")
     if kind == "line":
         fig.update_traces(
-            line=dict(color="#0F766E", width=2.8),
-            marker=dict(size=5, color="#0F766E"),
+            line=dict(color="#6D5CE7", width=2.8),
+            marker=dict(size=5, color="#6D5CE7"),
             mode="lines+markers",
             fill="tozeroy",
-            fillcolor="rgba(15, 118, 110, 0.08)",
+            fillcolor="rgba(109, 92, 231, 0.08)",
         )
     else:
         fig.update_traces(

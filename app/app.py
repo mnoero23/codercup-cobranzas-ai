@@ -678,8 +678,8 @@ def main() -> None:
     setup_page()
     bootstrap()
     with st.sidebar:
-        st.image(str(APP_DIR / "assets" / "envaplast-logo.svg"), width=210)
-        st.html('<div class="st-key-sidebar_tagline">COBRANZAS AI</div>')
+        st.image(str(APP_DIR / "assets" / "cobranzas-ai-logo.svg"), width=235)
+        st.html('<div class="st-key-sidebar_tagline">DECISIONES DE COBRO</div>')
         sidebar_section("PLATAFORMA")
         with st.expander("Sobre la empresa", icon=":material/factory:"):
             st.write(COMPANY_DESCRIPTION)
